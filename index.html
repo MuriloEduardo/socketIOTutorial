@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {}
+        .roomsContainer {
+            float:left;
+            width:100px;
+            border-right:1px solid black;
+            height:300px;
+            padding:10px;
+            overflow:scroll-y;
+        }
+        .conversationContainer {
+            float:left;
+            width:300px;
+            height:250px;
+            overflow:scroll-y;
+            padding:10px;
+        }
+        #data {
+
+        }
+    </style>
+</head>
+<body>
+<div class="roomsContainer">
+	<b>ROOMS</b>
+	<div id="rooms"></div>
+</div>
+<div class="conversationContainer">
+	<div id="conversation"></div>
+	<input id="data" style="width:200px;" />
+	<input type="button" id="datasend" value="send" />
+</div>
+</body>
+</html>
