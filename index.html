@@ -30,35 +30,58 @@
         var socket = io.connect('http://localhost:3000');
 
         socket.on('connect', function() {
-            socket.emit('addUser', prompt('What\'s your name?'))
+            socket.emit('addUser', prompt("What's your name"));
+
         });
 
         socket.on('updateChat', function(username, data) {
-            console.log(data);
             $('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
-        })
+        });
 
+        socket.on('updateRooms', function(rooms, currentRoom) {
+            $('#rooms').empty();
+            $.each(rooms, function(key, value) {
+                if(value === currentRoom) {
+                    $('#rooms').append('<div>'
+                    + value
+                    + '</div>');
+                }else {
+                    $('#rooms').append('<div><a href="#" onclick="switchRoom(\''+ value + '\')">'
+                     + value
+                     + '</a></div>');
+                }
+            });
+        });
 
+        function switchRoom(room) {
+            socket.emit('switchRoom', room);
+        }
 
+        //when the page loads we need to do a few things
         $(function() {
-            $('#datasend').click(function () {
+            //get sent data on click
+            $('#datasend').click( function() {
                 var message = $('#data').val();
-
+                //clear the input box
                 $('#data').val('');
                 $('#data').focus();
-
+                //send it to the server
                 socket.emit('sendChat', message);
             });
 
+            //allow the client to use enter key
             $('#data').keypress(function(e) {
                 if(e.which == 13) {
                     $(this).blur();
-
+                    //select the send box
                     $('#datasend').focus().click();
-                    //$('#data').focus();
+                    //Select the input box
+                    $('#data').focus();
                 }
-            })
-        })
+            });
+
+        });
+
     </script>
 
 </head>
